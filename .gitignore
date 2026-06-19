@@ -4,6 +4,7 @@ Thumbs.db
 *.swp
 .vscode/
 .idea/
+.claude/
 
 # Local visual reference (SingleFile captures, screenshots) -- not published
 /reference/
