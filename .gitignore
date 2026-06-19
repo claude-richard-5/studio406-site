@@ -1,0 +1,11 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Local visual reference (SingleFile captures, screenshots) -- not published
+/reference/
+
+# NOTE: images/ ARE committed -- they're the site content.
