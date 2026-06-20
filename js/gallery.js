@@ -1,5 +1,14 @@
 // Studio406 gallery lightbox — no dependencies.
 (function () {
+  // Fade thumbnails in as they load, instead of popping in abruptly.
+  document.querySelectorAll('.gallery-grid img').forEach(function (img) {
+    if (img.complete) {
+      img.classList.add('loaded');
+    } else {
+      img.addEventListener('load', function () { img.classList.add('loaded'); });
+    }
+  });
+
   const box = document.getElementById('lightbox');
   if (!box) return;
   const big = box.querySelector('img');

@@ -21,7 +21,7 @@
   --font: "Manrope", "Helvetica Neue", Arial, system-ui, sans-serif;
 
   --ink: #3c3c3c;          /* card text color — dark gray, not black */
-  --card-bg: rgba(244, 243, 241, 0.85);
+  --card-bg: rgba(241, 235, 224, 0.78);   /* warm cream, lets the photo bleed through */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -54,9 +54,11 @@ body::before {
 }
 body.home { --scrim: 0.1; }   /* let the photo breathe on the landing page */
 
-/* Inner pages: the photo sits blurred and dim behind a white content card,
-   matching the original's card-over-blurred-photo treatment. */
-body.page::before { filter: blur(10px) brightness(0.55); transform: scale(1.08); }
+/* Inner pages: the photo sits blurred (but still bright/visible) behind a
+   translucent content card — the original leans on blur, not a dark scrim,
+   to keep the card legible. */
+body.page { --scrim: 0.12; }
+body.page::before { filter: blur(4px); transform: scale(1.03); }
 
 a { color: inherit; text-decoration: none; }
 a:hover { opacity: 0.7; }
@@ -135,12 +137,12 @@ a:hover { opacity: 0.7; }
   backdrop-filter: blur(6px);
   color: var(--ink);
   border-radius: 2px;
-  padding: clamp(1.75rem, 4vw, 3rem) clamp(1.75rem, 5vw, 4rem);
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.5rem, 3.5vw, 2.5rem);
   margin: clamp(1rem, 3vh, 2.5rem) auto;
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.45);
 }
 .wrap.gallery-wrap { max-width: 1400px; }
-.wrap:not(.gallery-wrap) { max-width: 760px; }
+.wrap:not(.gallery-wrap) { max-width: 600px; }
 
 .site-header, .site-footer { position: relative; z-index: 1; }
 
@@ -179,25 +181,36 @@ a:hover { opacity: 0.7; }
    ============================================================ */
 
 .page-title {
-  font-size: clamp(2.5rem, 7vw, 4.25rem);
+  font-size: clamp(2rem, 9vw, 3.25rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1;
 }
 
 .quote-label {
+  display: block;
   color: var(--accent);
   font-weight: 600;
-  font-size: 0.95rem;
-  margin: 0.4rem 0 3rem;
+  font-size: 0.9rem;
+  margin: 0.4rem 0 0;
+}
+
+/* The Services card is tall, with the service list pinned to the bottom
+   and the gap below "Contact for Quote" filling the rest — like the
+   original's deliberately tall, mostly-empty card. */
+.services-wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(480px, 68vh, 720px);
 }
 
 .service-list {
   display: flex;
   flex-direction: column;
+  margin-top: auto;
 }
 .service-name {
-  font-size: clamp(2rem, 6vw, 3.25rem);
+  font-size: clamp(1.6rem, 7vw, 2.5rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.15;
@@ -272,8 +285,10 @@ a:hover { opacity: 0.7; }
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.5s ease;
 }
+.gallery-grid img.loaded { opacity: 1; }
 .gallery-grid figure:hover img { transform: scale(1.04); }
 
 /* lightbox */
