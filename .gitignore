@@ -10,3 +10,10 @@ Thumbs.db
 /reference/
 
 # NOTE: images/ ARE committed -- they're the site content.
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
