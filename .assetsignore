@@ -1,0 +1,4 @@
+# Files Wrangler should NOT upload as publicly-servable static assets,
+# even though they're present in the git checkout it builds from.
+.git
+.wrangler
