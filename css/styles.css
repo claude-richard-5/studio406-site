@@ -159,7 +159,7 @@ a:hover { opacity: 0.7; }
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  padding-right: 2.5rem;   /* clear the absolute-positioned close X */
+  padding-right: 3.25rem;  /* clear the absolute-positioned close X */
 }
 .card-email {
   font-size: 0.9rem;
@@ -168,8 +168,13 @@ a:hover { opacity: 0.7; }
 }
 .card-close {
   position: absolute;
-  top: clamp(1.25rem, 3vw, 2rem);
-  right: clamp(1.25rem, 3vw, 2rem);
+  top: clamp(0.75rem, 2vw, 1.5rem);
+  right: clamp(0.75rem, 2vw, 1.5rem);
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 2.25rem;
   font-weight: 400;
   line-height: 1;
@@ -234,7 +239,7 @@ a:hover { opacity: 0.7; }
   font-weight: 600;
   font-size: 0.85rem;
   padding-bottom: 0.6rem;
-  padding-right: 2.5rem;   /* clear the absolute-positioned close X */
+  padding-right: 3.25rem;  /* clear the absolute-positioned close X */
   margin-bottom: 1rem;
   border-bottom: 1px solid #c8c6c2;
 }
@@ -307,7 +312,12 @@ a:hover { opacity: 0.7; }
 .lightbox img { max-width: 95vw; max-height: 92vh; object-fit: contain; }
 .lightbox .close {
   position: absolute;
-  top: 1rem; right: 1.5rem;
+  top: 0.5rem; right: 1rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 2.5rem;
   color: #fff;
   line-height: 1;
@@ -320,7 +330,11 @@ a:hover { opacity: 0.7; }
 
 @media (max-width: 600px) {
   .site-header { flex-direction: column; align-items: flex-start; }
-  .gallery-grid { columns: 2 150px; }
+  .gallery-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .card-head { flex-direction: column; gap: 0.5rem; }
 }
 
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
