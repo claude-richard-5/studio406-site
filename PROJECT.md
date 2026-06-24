@@ -9,48 +9,58 @@ Studio406's website, originally built on Cargo (cargo.site) by REDTEAM, rebuilt
 as a plain static site with no Cargo dependency. All page content (services, the
 55-item gear list, the 30-image gallery, contact email, footer) was recovered
 from the original site's embedded data; all images were extracted from SingleFile
-captures of the live site. Endpoint: a GitHub repo published via Cloudflare Pages
-on the studio's own domain.
+captures of the live site. Deployed as a Cloudflare Worker (static assets, via
+Wrangler), connected to GitHub, live at studio406.co.
 
 ## Current state
 
 Done:
-- Four pages: index, service-menu, gear-list, gallery -- content complete.
-- All assets embedded locally: home-background.jpg, gallery-01..30.png, favicon.
-- Site-wide background photo with a tunable --scrim for legibility.
-- One stylesheet, one small JS lightbox, Cloudflare cache headers.
+- Four pages (home, services, gear, gallery) — content complete, design-matched
+  against the /reference SingleFile captures.
+- Typeface: Manrope (free, license-free stand-in for Cargo's licensed Diatype).
+- Mobile-responsive; image fade-in on the gallery.
+- Deployed: GitHub -> Cloudflare Worker -> studio406.co (cut over from Cargo).
+- Two-branch workflow: `staging` (preview deploys) -> `main` (production),
+  to avoid pushing untested changes straight to the live domain.
+- Access control: the site is invite-only. The public root `/` is just a
+  "Request access" mailto gate (self-contained, no dependency on `/studio/`);
+  the real site lives under `/studio/`, protected by a Cloudflare Access
+  Application (email one-time-PIN, no passwords). See README's "Access
+  control" section for how to grant access.
 
 Pending:
-- [ ] Compare each page to the SingleFile captures / screenshots and fine-tune
-      layout, spacing, type, and scrim to match the original (main design pass).
-- [ ] Decide on the typeface (keep license-free stack or substitute).
-- [ ] Confirm gallery image ORDER matches the original (they're in capture order,
-      named gallery-01..30; reorder filenames if needed).
-- [ ] git init -> push to GitHub -> connect Cloudflare Pages -> attach domain.
+- [ ] Contact form (currently a plain mailto: link on Services) — possible
+      Cloudflare Pages/Worker Function + a transactional email API (e.g.
+      Resend) if/when this becomes worth building.
+- [ ] Decide whether `www.studio406.co` should also resolve (currently only
+      the root domain is configured).
 
 ## Design intent
 
 Faithful to the original, not a redesign: the background photo on every page,
-white type with a soft drop-shadow, one red accent (the REDTEAM red), generous
-space, neo-grotesque type. The captures in /reference are the ground truth --
-when in doubt, match them.
+dark type with a soft drop-shadow on the home page, a translucent warm-cream
+card over a lightly-blurred photo on inner pages, one red accent (the REDTEAM
+red), generous space, neo-grotesque type. The captures in /reference are the
+ground truth — when in doubt, match them.
 
 ## Conventions
 
-- Static only. No framework, no build step (Cloudflare Pages serves as-is).
-- Keep the four original filenames so internal links stay stable.
-- Edit content in the HTML; edit all styling in css/styles.css.
+- Static only. No framework, no build step (the Worker serves the repo as-is
+  via wrangler.jsonc's `assets.directory`).
+- Keep the existing filenames so internal links stay stable.
+- Edit content in the HTML under `/studio/`; edit all styling in
+  `studio/css/styles.css`.
+- The root `index.html` (the access-request landing page) must stay fully
+  self-contained — no reference to anything under `/studio/`, since that path
+  is gated and an unauthenticated visitor still needs this page to render.
 - Plain, clean punctuation in any copy.
 
 ## How to work this in the Code tab
 
 1. Open the desktop app -> Code tab -> open this folder.
-2. Make a /reference folder and drop the SingleFile captures + screenshots in it
-   (it's gitignored, so it won't publish). That's the visual ground truth.
-3. Preview with a local server: python3 -m http.server 8000
-4. Work one page at a time; review each diff before accepting; commit in small steps.
-
-## Deploy (full steps in README)
-
-GitHub repo -> Cloudflare Pages (preset None, no build command, output dir /)
--> Custom domain.
+2. The /reference folder (gitignored) holds the original SingleFile captures —
+   the visual ground truth for the `/studio/` pages.
+3. Preview with a local server (see README's "Preview locally").
+4. Work one page at a time; review each diff before accepting; commit in
+   small steps. Push to `staging` first, verify on its preview URL, then
+   merge `staging` into `main` to go live.

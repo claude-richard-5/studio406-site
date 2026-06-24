@@ -4,30 +4,51 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Studio406</title>
-  <meta name="description" content="Studio406 — recording, mixing, mastering, and production.">
+  <meta name="description" content="Studio406 is by invitation only. Request access.">
   <link rel="icon" href="assets/favicon.ico" sizes="any">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700&display=swap" rel="stylesheet">
+  <style>
+    /* Self-contained on purpose: this page must never depend on anything
+       under /studio/, since that path sits behind Cloudflare Access and
+       an unauthenticated visitor needs this page to render regardless. */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: "Manrope", "Helvetica Neue", Arial, system-ui, sans-serif;
+      background: #161616;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.5rem;
+    }
+    h1 {
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 2.5rem;
+    }
+    a {
+      display: inline-block;
+      background: #ff2222;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.01em;
+      padding: 0.85rem 2rem;
+      border-radius: 2px;
+    }
+    a:hover { opacity: 0.85; }
+  </style>
 </head>
-<body class="home">
-
-  <header class="site-header">
-    <a class="wordmark" href="index.html">Studio406</a>
-    <nav class="nav">
-      <a href="service-menu.html">Services</a>
-      <a href="gear-list.html">Gear</a>
-      <a href="gallery.html">Gallery</a>
-    </nav>
-  </header>
-
-  <main class="hero"></main>
-
-  <footer class="site-footer">
-    <span>Studio406&reg; &nbsp;All rights reserved.</span>
-    <span class="credit">Website built by <b>REDTEAM</b></span>
-  </footer>
-
+<body>
+  <h1>Studio406</h1>
+  <a href="mailto:access@studio406.co?subject=Studio406%20access%20request">Request access</a>
 </body>
 </html>
