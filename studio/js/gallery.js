@@ -12,16 +12,25 @@
   const box = document.getElementById('lightbox');
   if (!box) return;
   const big = box.querySelector('img');
+  let scrollY = 0;
 
+  // overflow:hidden alone doesn't stop touch-scroll on iOS Safari — pinning
+  // the body with position:fixed is what actually locks the page behind.
   function open(src) {
     big.src = src;
     box.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    scrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = -scrollY + 'px';
+    document.body.style.width = '100%';
   }
   function close() {
     box.classList.remove('open');
     big.src = '';
-    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, scrollY);
   }
 
   document.querySelectorAll('.gallery-grid img').forEach(function (img) {

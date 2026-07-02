@@ -15,40 +15,124 @@
        an unauthenticated visitor needs this page to render regardless. */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { -webkit-text-size-adjust: 100%; }
+
+    html, body { height: 100%; overflow: hidden; }
+
     body {
       font-family: "Manrope", "Helvetica Neue", Arial, system-ui, sans-serif;
-      background: #161616;
-      color: #ffffff;
+      position: relative;
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
       padding: 1.5rem;
+      background: #161616;
     }
-    h1 {
-      font-size: clamp(2rem, 6vw, 3rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 2.5rem;
+
+    /* Blurred photo backdrop. Oversized + inset negative to hide the
+       soft edge the blur filter leaves at the viewport boundary. */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -30px;
+      background: url("assets/home-background.jpg") center/cover no-repeat;
+      filter: blur(12px); /* ~30% blur */
+      transform: scale(1.03);
+      z-index: 0;
     }
-    a {
-      display: inline-block;
-      background: #ff2222;
-      color: #fff;
-      text-decoration: none;
+
+    /* Slight scrim so the glass pill stays legible over bright areas of the photo */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.18);
+      z-index: 1;
+    }
+
+    /* True liquid-glass pill: no color fill, just refraction of the photo behind it */
+    .glass-button {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.35) 0%,
+        rgba(255, 255, 255, 0.1) 35%,
+        rgba(255, 255, 255, 0.06) 60%,
+        rgba(255, 255, 255, 0.22) 100%
+      );
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.8),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.12),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 10px 26px rgba(0, 0, 0, 0.3),
+        0 2px 6px rgba(0, 0, 0, 0.2);
+      padding: 0.83rem 2.06rem;
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 0.86rem;
       letter-spacing: 0.01em;
-      padding: 0.85rem 2rem;
-      border-radius: 2px;
+      color: #ffffff;
+      text-decoration: none;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: box-shadow 0.25s ease, transform 0.15s ease, background 0.25s ease;
     }
-    a:hover { opacity: 0.85; }
+
+    /* Diagonal specular sheen — the thing that actually reads as "glass" */
+    .glass-button::before {
+      content: "";
+      position: absolute;
+      inset: -40% -20%;
+      background: linear-gradient(
+        115deg,
+        rgba(255, 255, 255, 0) 30%,
+        rgba(255, 255, 255, 0.5) 45%,
+        rgba(255, 255, 255, 0.05) 58%,
+        rgba(255, 255, 255, 0) 70%
+      );
+      transform: translateX(-15%) rotate(3deg);
+      pointer-events: none;
+      z-index: 0;
+      transition: transform 0.5s ease;
+    }
+
+    .glass-button span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .glass-button:hover {
+      box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.9),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.12),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+        0 14px 32px rgba(0, 0, 0, 0.34),
+        0 3px 8px rgba(0, 0, 0, 0.22);
+      transform: translateY(-1px);
+    }
+
+    .glass-button:hover::before {
+      transform: translateX(15%) rotate(3deg);
+    }
+
+    .glass-button:active {
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
-  <h1>Studio406</h1>
-  <a href="mailto:access@studio406.co?subject=Studio406%20access%20request">Request access</a>
+  <a class="glass-button" href="mailto:access@studio406.co?subject=Studio406%20access%20request">
+    <span>Request Access</span>
+  </a>
 </body>
 </html>
