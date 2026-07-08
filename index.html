@@ -123,11 +123,30 @@
     .glass-button:active {
       transform: translateY(0);
     }
+
+    .gate {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.125rem;
+      transform: scale(0.75); /* all elements 25% smaller, proportions preserved */
+    }
+
+    .gate-logo {
+      width: 176.6px; /* matched to .glass-button's rendered width */
+      height: auto;
+      filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.1));
+    }
   </style>
 </head>
 <body>
-  <a class="glass-button" href="mailto:access@studio406.co?subject=Studio406%20access%20request">
-    <span>Request Access</span>
-  </a>
+  <div class="gate">
+    <img class="gate-logo" src="assets/studio406-logo.png" alt="Studio406">
+    <a class="glass-button" href="mailto:access@studio406.co?subject=Studio406%20access%20request">
+      <span>Request Access</span>
+    </a>
+  </div>
 </body>
 </html>
