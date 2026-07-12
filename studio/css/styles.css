@@ -83,7 +83,7 @@ a:hover { opacity: 0.7; }
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem 2rem;
-  padding: var(--gap);
+  padding: var(--gap) var(--gap) calc(var(--gap) * 0.5);
   max-width: var(--maxw);
   margin: 0 auto;
   width: 100%;
@@ -142,7 +142,7 @@ a:hover { opacity: 0.7; }
   color: var(--ink);
   border-radius: 2px;
   padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.5rem, 3.5vw, 2.5rem);
-  margin: clamp(1rem, 3vh, 2.5rem) auto;
+  margin: 0 auto clamp(1rem, 3vh, 2.5rem);
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.45);
 }
 .wrap.gallery-wrap { max-width: 1400px; }
