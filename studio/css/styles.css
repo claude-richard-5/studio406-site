@@ -128,9 +128,6 @@ a:hover { opacity: 0.7; }
   font-size: clamp(0.6rem, 1.4vw, 0.7rem);
   color: var(--text-dim);
 }
-.site-footer .credit { color: var(--accent); }
-.site-footer .credit b { font-weight: 700; letter-spacing: 0.02em; }
-
 /* ============================================================
    HOME — wordmark over the site-wide background photo
    ============================================================ */
