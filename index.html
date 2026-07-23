@@ -32,14 +32,17 @@
       background: #f4f2ef url("assets/access-web.jpg") center / cover no-repeat;
     }
 
-    /* Phones keep the portrait crop in BOTH orientations. A rotated phone is
-       ~844-932px wide, which fell outside a width-only breakpoint and swapped
-       in the desktop art mid-session. The second query catches a landscape
-       phone (short viewport) while the 950px cap keeps a wide-but-short
-       desktop window on the desktop art. */
-    @media (max-width: 600px),
-           (max-height: 600px) and (max-width: 950px) {
+    /* Portrait phone: the tall crop of the right-hand page. */
+    @media (max-width: 600px) {
       body { background-image: url("assets/access-mobile.jpg"); }
+    }
+
+    /* Landscape phone: a dedicated wide crop of the spread, so a rotated phone
+       fills the frame instead of showing a thin slice of the portrait art.
+       Declared after the portrait rule so it wins on a short viewport; the
+       950px cap keeps a wide-but-short desktop window on the desktop art. */
+    @media (max-height: 600px) and (max-width: 950px) {
+      body { background-image: url("assets/access-landscape.jpg"); }
     }
 
     /* True liquid-glass pill: light glass, no color fill, sits on the tonal gradient */
