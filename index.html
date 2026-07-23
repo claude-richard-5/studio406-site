@@ -116,13 +116,15 @@
     }
 
     .gate {
-      position: relative;
+      position: absolute;
+      left: 50%;
+      top: 75%; /* 3/4 down the page, clear of the calligraphy */
       z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 2.125rem;
-      transform: scale(0.75); /* all elements 25% smaller, proportions preserved */
+      transform: translate(-50%, -50%) scale(0.75);
     }
   </style>
 </head>
