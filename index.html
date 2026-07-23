@@ -26,9 +26,10 @@
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
-      /* Calligraphy photo backdrop — the solid color shows while the JPEG
-         loads. Landscape art on larger screens, portrait crop on phones. */
-      background: #f4f2ef url("assets/access-web.jpg") center / cover no-repeat;
+      /* Calligraphy photo backdrop, shown in full — contain, never cropped;
+         the off-white letterbox blends with the paper. Landscape art on
+         larger screens, portrait crop on phones (below). */
+      background: #f4f2ef url("assets/access-web.jpg") center / contain no-repeat;
     }
 
     @media (max-width: 600px) {
@@ -123,17 +124,10 @@
       gap: 2.125rem;
       transform: scale(0.75); /* all elements 25% smaller, proportions preserved */
     }
-
-    .gate-logo {
-      width: 176.6px; /* matched to .glass-button's rendered width */
-      height: auto;
-      filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.1));
-    }
   </style>
 </head>
 <body>
   <div class="gate">
-    <img class="gate-logo" src="assets/studio406-logo.png" alt="Studio406">
     <a class="glass-button" href="mailto:access@studio406.co?subject=Studio406%20access%20request">
       <span>Request Access</span>
     </a>
