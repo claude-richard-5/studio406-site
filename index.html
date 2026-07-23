@@ -26,23 +26,13 @@
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
-      background: linear-gradient(
-        135deg,
-        #ffffff 0%,
-        #f4f2ef 22%,
-        #ffffff 45%,
-        #eeece8 68%,
-        #f9f8f6 85%,
-        #ffffff 100%
-      );
-      background-size: 340% 340%;
-      animation: tone-drift 24s ease infinite;
+      /* Calligraphy photo backdrop — the solid color shows while the JPEG
+         loads. Landscape art on larger screens, portrait crop on phones. */
+      background: #f4f2ef url("assets/access-web.jpg") center / cover no-repeat;
     }
 
-    @keyframes tone-drift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    @media (max-width: 600px) {
+      body { background-image: url("assets/access-mobile.jpg"); }
     }
 
     /* True liquid-glass pill: light glass, no color fill, sits on the tonal gradient */
