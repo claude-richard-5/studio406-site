@@ -26,10 +26,10 @@
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
-      /* Calligraphy photo backdrop, shown in full — contain, never cropped;
-         the off-white letterbox blends with the paper. Landscape art on
-         larger screens, portrait crop on phones (below). */
-      background: #f4f2ef url("assets/access-web.jpg") center / contain no-repeat;
+      /* Calligraphy photo backdrop — cover, filling the whole frame (cropped
+         as needed). The mobile query below just swaps in the portrait crop and
+         inherits this cover sizing. */
+      background: #f4f2ef url("assets/access-web.jpg") center / cover no-repeat;
     }
 
     @media (max-width: 600px) {
