@@ -17,8 +17,7 @@ export default {
     const url = new URL(request.url);
     if (url.pathname === "/api/request-access") {
       if (request.method !== "POST") {
-        // `build` marker is a temporary deploy-detection aid — remove before production.
-        return json({ ok: false, error: "Method not allowed", build: "r2" }, 405);
+        return json({ ok: false, error: "Method not allowed" }, 405);
       }
       return handleAccessRequest(request, env);
     }
