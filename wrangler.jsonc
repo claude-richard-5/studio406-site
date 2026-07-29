@@ -10,12 +10,6 @@
     "directory": ".",
     "binding": "ASSETS"
   },
-  "send_email": [
-    {
-      "name": "ACCESS_MAILER",
-      "destination_address": "access@studio406.co"
-    }
-  ],
   "compatibility_flags": [
     "nodejs_compat"
   ]
