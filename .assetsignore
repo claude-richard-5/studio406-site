@@ -2,3 +2,4 @@
 # even though they're present in the git checkout it builds from.
 .git
 .wrangler
+src
