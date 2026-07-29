@@ -27,6 +27,14 @@ export default {
 };
 
 async function handleAccessRequest(request, env) {
+  // Per-IP rate limit — caps a bot from flooding access@ or draining the Resend
+  // quota in a burst. A real visitor submits once, so this never affects them.
+  const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+  const { success } = await env.ACCESS_RL.limit({ key: ip });
+  if (!success) {
+    return json({ ok: false, error: "Too many requests — please wait a moment and try again." }, 429);
+  }
+
   let email = "";
   let honeypot = "";
 
@@ -53,7 +61,8 @@ async function handleAccessRequest(request, env) {
   }
 
   if (!env.RESEND_API_KEY) {
-    return json({ ok: false, error: "Mailer not configured.", detail: "RESEND_API_KEY secret is not set" }, 500);
+    console.error("RESEND_API_KEY secret is not set");
+    return json({ ok: false, error: "Mailer not configured." }, 500);
   }
 
   try {
@@ -76,12 +85,12 @@ async function handleAccessRequest(request, env) {
     });
 
     if (!res.ok) {
-      // NOTE: `detail` is for the staging test loop only — remove before production.
-      const detail = await res.text();
-      return json({ ok: false, error: "Could not send the request.", detail }, 502);
+      console.error("Resend send failed:", res.status, await res.text());
+      return json({ ok: false, error: "Could not send the request." }, 502);
     }
   } catch (err) {
-    return json({ ok: false, error: "Could not send the request.", detail: String(err) }, 502);
+    console.error("Resend request error:", err);
+    return json({ ok: false, error: "Could not send the request." }, 502);
   }
 
   return json({ ok: true });
