@@ -1,14 +1,19 @@
-# Cloudflare Pages reads this file to set response headers.
-# Long-cache static assets; keep HTML fresh so edits show up fast.
+# Cloudflare (Workers static assets) reads this file to set response headers.
+# Gallery images are long-cached (stable filenames). Everything that changes
+# during development — HTML, CSS, JS, and the gate art in /assets — revalidates
+# so edits show up immediately without needing a hard refresh.
 
 /studio/images/*
   Cache-Control: public, max-age=31536000, immutable
 
 /studio/css/*
-  Cache-Control: public, max-age=86400
+  Cache-Control: public, max-age=0, must-revalidate
 
 /studio/js/*
-  Cache-Control: public, max-age=86400
+  Cache-Control: public, max-age=0, must-revalidate
+
+/assets/*
+  Cache-Control: public, max-age=0, must-revalidate
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
