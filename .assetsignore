@@ -1,5 +1,18 @@
 # Files Wrangler should NOT upload as publicly-servable static assets,
 # even though they're present in the git checkout it builds from.
+# The site is fully public, so anything not meant for visitors must be listed here.
 .git
 .wrangler
 src
+
+# Archive of the old invite-only site (incl. photos of the house/basement studio)
+# and the retired calligraphy gate page — kept in the repo, never published.
+studio
+assets/access-*.jpg
+assets/home-background.jpg
+assets/studio406-logo.png
+_recovered
+
+# Project docs and config
+*.md
+wrangler.jsonc

@@ -1,0 +1,6 @@
+# The old invite-only site lived under /studio/ and the public prototype under
+# /v2/. Both now point to the public homepage so old bookmarks still land.
+/studio      /  301
+/studio/*    /  301
+/v2          /  301
+/v2/*        /  301

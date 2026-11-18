@@ -1,22 +1,19 @@
 # Cloudflare (Workers static assets) reads this file to set response headers.
-# Gallery images are long-cached (stable filenames). Everything that changes
-# during development — HTML, CSS, JS, and the gate art in /assets — revalidates
-# so edits show up immediately without needing a hard refresh.
+# Everything revalidates while the new public site is still being iterated on,
+# so edits show up immediately without a hard refresh. Once the design settles,
+# /img/* can move to long caching.
 
-/studio/images/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/studio/css/*
+/css/*
   Cache-Control: public, max-age=0, must-revalidate
 
-/studio/js/*
+/img/*
   Cache-Control: public, max-age=0, must-revalidate
 
 /assets/*
   Cache-Control: public, max-age=0, must-revalidate
 
-/v2/*
+/*.html
   Cache-Control: public, max-age=0, must-revalidate
 
-/*.html
+/
   Cache-Control: public, max-age=0, must-revalidate
