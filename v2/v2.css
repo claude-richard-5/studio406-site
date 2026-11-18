@@ -118,6 +118,12 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 760px) {
   .services, .gear-grid { grid-template-columns: 1fr; }
   .hero-photo img { aspect-ratio: 4 / 3; }
+  /* desktop spacing stacks into big empty bands on a phone — tighten it */
+  .hero { padding-top: 2.25rem; padding-bottom: 0.5rem; }
+  .hero-photo { margin-top: 1.75rem; }
+  .block { padding-top: 2.5rem; padding-bottom: 1rem; }
+  .block-head { margin-bottom: 1.25rem; }
+  .foot { margin-top: 2.5rem; }
   .gear-photos { grid-template-columns: repeat(2, 1fr); }
   .nav { gap: 1rem; }
 }
