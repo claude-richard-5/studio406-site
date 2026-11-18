@@ -15,5 +15,8 @@
 /assets/*
   Cache-Control: public, max-age=0, must-revalidate
 
+/v2/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
