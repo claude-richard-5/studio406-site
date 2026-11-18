@@ -84,6 +84,11 @@ a { color: inherit; text-decoration: none; }
 }
 .r-title { font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em; line-height: 1.25; }
 .r-artist { font-size: 0.9rem; color: var(--muted); min-height: 1.35em; margin-bottom: 0.6rem; }
+/* optional tag under the artist, e.g. "Cover · The Microphones" */
+.r-tag {
+  margin: -0.35rem 0 0.6rem; font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent);
+}
 .r-listen {
   margin-top: auto;   /* ...so Listen sits on one line even when a title wraps */
   padding-top: 0.6rem; border-top: 1px solid var(--line);
