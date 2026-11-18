@@ -1,82 +1,72 @@
-# Studio406 — website
+# Studio 406 — website
 
-A plain, static rebuild of the Studio406 site, recovered from the original
-Cargo site and rebuilt with no platform dependency. Just HTML, one CSS file,
-and a few KB of vanilla JavaScript for the gallery lightbox. Deployed as a
-**Cloudflare Worker** (static assets, via Wrangler) connected to this GitHub
-repo.
+The public website for Studio 406, a recording space in Kensington Market,
+Toronto. A plain static site — one HTML page, one CSS file, no JavaScript, no
+build step — deployed as a **Cloudflare Worker** (static assets, via Wrangler)
+connected to this GitHub repo.
 
-Everything it needs is in this folder — including all images, which were
-extracted from the SingleFile captures of the live site. There is no Cargo
-dependency and nothing to download.
-
-The site is invite-only. The public root page is just a "request access"
-gate; the real site lives under `/studio/` and is gated by Cloudflare Access
-(email one-time-PIN) at the edge — see "Access control" below.
+The site is fully public. (Until November 2026 it was an invite-only site
+behind Cloudflare Access; that version is archived in `studio/` — see below.)
 
 ## Structure
 
 ```
 studio406-site/
-├── index.html           Public landing page — just a "Request access" mailto
-│                        link, fully self-contained (inline CSS, no /studio/
-│                        dependency, since it must render for anyone)
-├── assets/              favicon.ico (shared by both the landing page and /studio/)
-├── studio/              The real site — gated by Cloudflare Access
-│   ├── index.html       Home (wordmark over the background photo)
-│   ├── service-menu.html  Services
-│   ├── gear-list.html   Gear inventory (6 categories, 55 items)
-│   ├── gallery.html     Image grid + lightbox
-│   ├── css/styles.css   All styling (one --scrim variable tunes legibility)
-│   ├── js/gallery.js    Lightbox behaviour
-│   └── images/          home-background.jpg + gallery-01..30.png
-├── wrangler.jsonc        Worker config (serves the whole repo as static assets)
-├── .assetsignore         Excludes .git/.wrangler from what gets served publicly
-├── _headers              Cloudflare cache rules
-├── _recovered/           The original Cargo data this was rebuilt from (reference)
-├── PROJECT.md            Working brief / task board
-└── .gitignore
+├── index.html            The site: hero, Projects, Services, Gear, Contact
+├── css/site.css          All styling (white, hairline rules, Manrope, red accent)
+├── img/
+│   ├── hero-live-room.jpg  Hero photo
+│   ├── photo-*.jpg         Gear photos (approved set only — see below)
+│   └── releases/           Project cover art, 600px squares
+├── assets/               favicon.ico, apple-touch-icon.png, icon-192.png
+├── src/worker.js         Worker: currently just serves the static assets
+├── wrangler.jsonc        Worker config
+├── _headers              Cache rules (everything revalidates for now)
+├── _redirects            Old /studio/* and /v2/* links → homepage (301)
+├── .assetsignore         What is NOT published (see below)
+│
+├── studio/               ARCHIVE — the old invite-only site + old gate page.
+│                         Kept in git, never published.
+└── _recovered/           ARCHIVE — original Cargo data. Never published.
 ```
 
-## Access control
+## What gets published
 
-`/studio/*` is protected by a Cloudflare Access Application (email one-time
-PIN, no passwords). To grant someone access: add their email to the Access
-policy's allow-list in the Cloudflare dashboard (Zero Trust → Access →
-Applications), then reply to their request with the `/studio/` URL. Nothing
-under `/studio/` — including its CSS/JS/images — is reachable by an
-unauthenticated visitor, which is why the root landing page never references
-anything inside `/studio/`.
+The Worker publishes the repo folder as-is, **minus** everything listed in
+`.assetsignore`. Because the site is public, anything not meant for visitors
+must be listed there. Currently excluded: `studio/` (the old site, including
+photos of the house/basement studio), the old gate art in `assets/`,
+`_recovered/`, all `*.md` docs and `wrangler.jsonc`.
 
-## Image resolution
+**Photos:** only the approved set may be used — the old gallery's #1, 2, 17, 18,
+20, 22, 24, plus the live-room hero. The rest show the house; don't publish them.
 
-The gallery images are 1000x1000 and the background is 3000x2012 -- the
-web-resolution copies embedded in the captures, which is ideal page weight for
-the web. To go higher-res later, drop your own originals into images/ using the
-same filenames and they'll be picked up automatically.
+## Adding a project
+
+Each card in the Projects section is one `<li>` in `index.html`. Copy one,
+then swap the link, title, artist and cover. Covers come from the release
+link itself: song.link / album.link pages expose title, artist, type, cover
+(`og:image`) and release date in their page data — note that the release
+date's month is 0-based. Save the cover to `img/releases/` at 600×600.
+Order: the two too.fm releases first, then newest to oldest.
 
 ## Preview locally
 
-Run a tiny local server (better than opening the file directly), e.g. with
-Node installed:
+Any static file server works, e.g. with Node installed:
 
     npx serve .
     # then visit http://localhost:3000
 
 ## Deploying
 
-Push to GitHub: the repo is connected to a Cloudflare Worker
-(`studio406-site`) with git integration. Pushing to `staging` deploys to a
-preview URL; merging `staging` into `main` deploys to production
-(studio406.co). See `COLLABORATOR_SETUP.md` (not committed — ask the project
-owner) for the full workflow, or `PROJECT.md` for the working brief.
+Push to `staging` → it deploys to
+https://staging-studio406-site.claude-richard.workers.dev for review. Merge
+`staging` into `main` → it deploys to production at https://studio406.co.
+See `PROJECT.md` for the working brief.
 
-## Notes
+## Email
 
-- The original face was Cargo's "Diatype"; this uses a license-free
-  neo-grotesque stack. Swap the --font variable in studio/css/styles.css to
-  change it.
-- --scrim in studio/css/styles.css controls how much the background photo is
-  dimmed behind text (0 = none, 1 = black). Home uses a lighter scrim than
-  content pages.
-- The red accent (--accent) is the "REDTEAM" red from the original footer.
+Outbound email (for the planned "Request Quote" form) uses **Resend**, sending
+from `send.studio406.co`, because studio406.co's own mail runs on Microsoft
+365. The API key is the `RESEND_API_KEY` Worker secret (dashboard only — never
+in this public repo). `src/worker.js` explains what is kept for it.
