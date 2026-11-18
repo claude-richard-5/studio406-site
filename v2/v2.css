@@ -76,15 +76,17 @@ a { color: inherit; text-decoration: none; }
   list-style: none; display: grid; gap: clamp(1.25rem, 3vw, 2rem);
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
-.release { display: flex; flex-direction: column; }
+.releases li { display: flex; }   /* cards in a row share a height... */
+.release { display: flex; flex-direction: column; flex: 1; }
 .release img {
   display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover;
   background: #f2f2f2; margin-bottom: 0.85rem; transition: opacity .2s;
 }
 .r-title { font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em; line-height: 1.25; }
-.r-artist { font-size: 0.9rem; color: var(--muted); min-height: 1.35em; }
+.r-artist { font-size: 0.9rem; color: var(--muted); min-height: 1.35em; margin-bottom: 0.6rem; }
 .r-listen {
-  margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--line);
+  margin-top: auto;   /* ...so Listen sits on one line even when a title wraps */
+  padding-top: 0.6rem; border-top: 1px solid var(--line);
   font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
 }
 .release:hover img { opacity: 0.85; }
